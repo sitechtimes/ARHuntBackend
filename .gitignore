@@ -1,2 +1,4 @@
 venv
 ARHuntBackend/db
+__pycache__
+*.pyc
