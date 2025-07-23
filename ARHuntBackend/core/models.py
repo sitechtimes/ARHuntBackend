@@ -16,6 +16,11 @@ class CustomUser(AbstractUser):
     def __str__(self):
         return self.email
 
-
+class Rat(models.Model):
+    rat_type = models.CharField()
+    scale = models.CharField()
+    caught = models.BooleanField(default = False)
+    score = models.IntegerField()
+    user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
 
 
