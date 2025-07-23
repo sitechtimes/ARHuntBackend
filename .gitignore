@@ -1,2 +1,3 @@
 venv
 ARHuntBackend/db
+ARHuntBackend/mysite/__pycache__

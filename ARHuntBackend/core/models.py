@@ -1,6 +1,6 @@
 from django.db import models
 
-# Create your models here.
+# Create your models here.  
 
 class Rat(models.Model):
     rat_type = models.CharField()
