@@ -5,11 +5,11 @@ from .managers import CustomUserManager
 
 class CustomUser(AbstractUser):
     username = models.CharField(max_length=150, unique=True)
-    grade = models.IntegerField(default=0)
+    grade = models.IntegerField(default=0, null=True)
     email = models.EmailField(_('email address'), unique=True)
     
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username', 'grade']
+    REQUIRED_FIELDS = ['username']
 
     objects = CustomUserManager()
     score = models.IntegerField(default=0)
