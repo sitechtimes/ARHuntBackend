@@ -1,6 +1,6 @@
 <!--------------------------------
 Before you submit your PR:
-1. Do you have any console.logs for testing purposes? Remove them please!
+1. Do you have any prints for testing purposes? Remove them please!
 2. Does your code actually work? Test all of your changes one more time!
 3. Fill out the section below. It helps us review your PR because I ain't reading allat lil bro
 4. Delete these instruction comments (optional)
@@ -16,5 +16,4 @@ Examples:
 -------------------------------------------------------------------------------------------------------------->
 
 ### Changes
-
 - 
