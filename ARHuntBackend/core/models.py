@@ -3,15 +3,16 @@ from django.contrib.auth.models import AbstractUser
 from .managers import CustomUserManager
 
 class CustomUser(AbstractUser):
-    username = models.CharField(max_length=150, unique=True)
+    username = None
+    name = models.CharField(max_length=150, default="Anon")
     grade = models.IntegerField(default=0, null=True)
     email = models.EmailField(unique=True)
+    score = models.IntegerField(default=0)
     
     USERNAME_FIELD = 'email'
-    REQUIRED_FIELDS = ['username']
+    REQUIRED_FIELDS = ['name', 'grade']
 
     objects = CustomUserManager()
-    score = models.IntegerField(default=0)
     
     def __str__(self):
         return self.email
