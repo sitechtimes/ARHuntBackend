@@ -1,3 +1,5 @@
 venv
-ARHuntBackend/db
-ARHuntBackend/mysite/__pycache__
+# ARHuntBackend/db.sqlite3
+db.sqlite3
+__pycache__
+*.pyc
