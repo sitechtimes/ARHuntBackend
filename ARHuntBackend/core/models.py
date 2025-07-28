@@ -4,7 +4,7 @@ from .managers import CustomUserManager
 
 class CustomUser(AbstractUser):
     username = None
-    name = models.CharField(max_length=150, default="Anon")
+    name = models.CharField(max_length=150, default="Anon", unique=True)
     grade = models.IntegerField(default=0, null=True)
     email = models.EmailField(unique=True)
     score = models.IntegerField(default=0)

@@ -6,13 +6,14 @@ from django.shortcuts import render
 from .models import *
 from .serializers import *
 from rest_framework_simplejwt.views import TokenObtainPairView
+
 class UserView(APIView):
     def get(self, request):
         user = CustomUser.objects.all()
         return Response(UserSerializer(user, many=True).data)
 
 class RegisterView(generics.CreateAPIView):
-    queryset = CustomUser.objects.all()
+    users = CustomUser.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.AllowAny]
 
