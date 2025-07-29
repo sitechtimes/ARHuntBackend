@@ -6,6 +6,7 @@ from django.shortcuts import render
 from .models import *
 from .serializers import *
 from rest_framework_simplejwt.views import TokenObtainPairView
+from rest_framework.parsers import MultiPartParser, FormParser
 
 class UserView(APIView):
     def get(self, request):
@@ -29,5 +30,24 @@ class RatView(APIView):
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
 
+from supa import supabase
+
+result = supabase.storage.from_("rat-models").get_public_url("rat.glb")
 
 
+class ListFoldersView(APIView):
+    def get(self, request):
+        bucket = request.query_params.get("bucket")
+        if not bucket:
+            return Response({"error": "Missing bucket parameter"}, status=400)
+
+        folders = request.query_params.getlist("folder")
+        if not folders:
+            return Response({"error": "At least one folder param is required"}, status=400)
+
+        combined = []
+        for folder in folders:
+            resp = supabase.storage.from_(bucket).list(folder)
+            combined.extend(resp)
+
+        return Response({"files": combined})
