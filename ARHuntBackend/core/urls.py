@@ -9,8 +9,9 @@ from rest_framework_simplejwt.views import (
 )
 urlpatterns = [
     path('users/', UserView.as_view(), name='users'),
+    path('users/<str:name>', UserByName.as_view(), name='user_by_name'),
     path('rats/', RatView.as_view(), name='rats'),
-    path('create_rats/', InitRats.as_view(), name='create_rats'),
+    path('catch_rat',CatchRat.as_view(),name='catch_rat'),
     path('admin/', admin.site.urls),
     path('register/', RegisterView.as_view(), name='register'),
 

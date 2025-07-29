@@ -23,5 +23,6 @@ class Rat(models.Model):
     caught = models.BooleanField(default = False)
     score = models.IntegerField()
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
+    rat_id = models.IntegerField(default=0) # front end said to put a rat id field instead of using the auto generated id because they're supplying us with a rat id 
 
 
