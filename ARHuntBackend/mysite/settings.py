@@ -39,13 +39,13 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'rest_framework.authtoken',
-    'rest_auth',
+    'dj_rest_auth',                # <-- change here
+    'dj_rest_auth.registration',  # <-- and here
     'django.contrib.sites',
     'allauth',
     'allauth.account',
-    'rest_auth.registration',
+    'allauth.socialaccount',
     'core',
-    'reset_migrations',
 ]
 
 MIDDLEWARE = [
