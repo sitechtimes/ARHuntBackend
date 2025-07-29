@@ -11,7 +11,7 @@ def update_score(sender, instance, **kwargs):
         return
     previous = Rat.objects.get(rat_id=instance.rat_id)
 
-    if instance.id is not None and not previous.caught:
+    if not previous.caught:
         user = get_object_or_404(CustomUser, pk=instance.user_id)
         user.score += instance.score
         user.save()
