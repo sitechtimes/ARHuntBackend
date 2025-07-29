@@ -2,25 +2,26 @@ from django.contrib import admin
 from django.contrib.auth.admin import UserAdmin
 from .models import CustomUser
 
+
+admin.site.register(CustomUser)
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
+    list_display = ('email', 'name', 'grade', 'is_staff', 'is_active')
+    list_filter = ('is_staff', 'is_active')
 
     fieldsets = (
-        (None, {'fields': ('email', 'username', 'password')}),
-        ('Personal Info', {'fields': ('score', 'grade')}),  
-        ('Permissions', {'fields': ('is_staff', 'is_superuser', 'is_active', 'groups', 'user_permissions')}),
-        ('Important dates', {'fields': ('last_login',)}),
+        (None, {'fields': ('email', 'password')}),
+        (('Personal info'), {'fields': ('name', 'grade')}),
+        (('Permissions'), {'fields': ('is_active', 'is_staff', 'is_superuser', 'groups', 'user_permissions')}),
+        (('Important dates'), {'fields': ('last_login',)}),
     )
+
     add_fieldsets = (
         (None, {
             'classes': ('wide',),
-            'fields': ('email', 'username', 'password1', 'password2', 'score', 'grade', 'is_staff', 'is_active')}
-        ),
+            'fields': ('email', 'name', 'grade', 'password1', 'password2'),
+        }),
     )
-    list_display = ('email', 'username', 'score', 'grade', 'is_staff', 'is_active')
-    search_fields = ('email', 'username')
+
+    search_fields = ('email',)
     ordering = ('email',)
-
-admin.site.register(CustomUser, CustomUserAdmin)
-
-#customizing what is displayed, removed display of the fields 'first_name' and 'last_name'
