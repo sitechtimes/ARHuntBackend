@@ -6,7 +6,6 @@ from django.shortcuts import render
 from .models import *
 from .serializers import *
 from rest_framework_simplejwt.views import TokenObtainPairView
-from rest_framework.parsers import MultiPartParser, FormParser
 
 class UserView(APIView):
     def get(self, request):
@@ -44,10 +43,18 @@ class ListFoldersView(APIView):
         folders = request.query_params.getlist("folder")
         if not folders:
             return Response({"error": "At least one folder param is required"}, status=400)
-
-        combined = []
+        
+        response_data = {}
         for folder in folders:
-            resp = supabase.storage.from_(bucket).list(folder)
-            combined.extend(resp)
+            files = supabase.storage.from_(bucket).list(folder)
+            folder_files = []
+            for file in files:
+                file_path = f"{folder}/{file['name']}"
+                public_url = supabase.storage.from_(bucket).get_public_url(file_path)
+                folder_files.append({
+                    **file,
+                    "url": public_url,
+                })
+            response_data[folder] = folder_files
 
-        return Response({"files": combined})
+        return Response({"files": response_data})
