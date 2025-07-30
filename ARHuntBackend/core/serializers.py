@@ -18,4 +18,17 @@ class UserSerializer(serializers.ModelSerializer):
 class RatSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rat
-        fields = ["qr_number", "rat_type", "scale", "caught", "score", "user"]
+        fields = ["qr_number", "rat_type", "scale", "caught", "score", "user", "name", "rarity"]
+        
+    def update(self, instance, validated_data):
+        previous_caught = instance.caught
+
+        instance = super().update(instance, validated_data)
+
+        if not previous_caught and instance.caught:
+            user = instance.user
+            user.score += instance.score  
+            user.save()
+            instance.delete()
+
+        return instance

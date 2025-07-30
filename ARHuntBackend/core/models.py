@@ -26,5 +26,5 @@ class Rat(models.Model):
     score = models.IntegerField(null=True)
     rarity = models.IntegerField(null=True)
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    qr_number = models.IntegerField(default=0, primary_key=True)
+    qr_number = models.IntegerField(default=0)
     name = models.CharField(max_length=100)

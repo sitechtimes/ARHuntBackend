@@ -42,10 +42,11 @@ class RatView(APIView):
 
 class CatchRat(APIView):
     def post(self, request):
-        user_id = request.user.id
+        # user_id = request.user.id
+        user_id = request.data.get("user")
         qr_number = request.data.get("qr_number")
         if not qr_number:
-            return Response({"No rat id provided"}, status=400)
+            return Response({"No qr number provided"}, status=400)
         rat = get_object_or_404(Rat, qr_number=qr_number, user=user_id)
 
         if rat.caught:
