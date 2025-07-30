@@ -6,6 +6,7 @@ from django.shortcuts import render, get_object_or_404
 from .models import *
 from .serializers import *
 from rest_framework_simplejwt.views import TokenObtainPairView
+from supa import supabase
 
 
 class UserView(APIView):
@@ -53,3 +54,30 @@ class CatchRat(APIView):
         rat.save()
         serializer = RatSerializer(rat)
         return Response(serializer.data, status=201)
+
+
+class ListAllFilesView(APIView):
+    def get(self, request):
+        bucket = "rat-models"
+
+        files = supabase.storage.from_(bucket).list()
+        all_files = []
+        for file in files:
+            file_path = f"{file['name']}"
+            public_url = supabase.storage.from_(bucket).get_public_url(file_path)
+            all_files.append(
+                {
+                    **file,
+                    "url": public_url,
+                }
+            )
+
+        return Response({"files": all_files})
+
+
+class ListFileByTypeRarity(APIView):
+    def get(self, request):
+        bucket = "rat-models"
+        file_path = f"{request.data['rat_type']}.glb"
+        public_url = supabase.storage.from_(bucket).get_public_url(file_path)
+        return Response({"url": public_url})
