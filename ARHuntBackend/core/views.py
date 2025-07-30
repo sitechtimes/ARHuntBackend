@@ -29,5 +29,27 @@ class RatView(APIView):
             return Response(serializer.data, status=201)
         return Response(serializer.errors, status=400)
 
+from supa import supabase
 
+class ListAllFilesView(APIView):
+    def get(self, request):
+        bucket = "rat-models"
 
+        files = supabase.storage.from_(bucket).list()
+        all_files = []
+        for file in files:
+            file_path = f"{file['name']}"
+            public_url = supabase.storage.from_(bucket).get_public_url(file_path)
+            all_files.append({
+                **file,
+                "url": public_url,
+            })
+        
+        return Response({"files": all_files})
+
+class ListFileByTypeRarity(APIView):
+    def get(self, request):
+        bucket = "rat-models"
+        file_path = f"{request.data['rat_type']}.glb"
+        public_url = supabase.storage.from_(bucket).get_public_url(file_path)
+        return Response({"url": public_url})

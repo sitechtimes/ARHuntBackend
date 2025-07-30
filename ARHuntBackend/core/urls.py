@@ -12,6 +12,8 @@ urlpatterns = [
     path('rats/', RatView.as_view(), name='rats'),
     path('admin/', admin.site.urls),
     path('register/', RegisterView.as_view(), name='register'),
+    path('all_files/', ListAllFilesView.as_view(), name='list-all-files'),
+    path('file/', ListFileByTypeRarity.as_view(), name='list-file-type-rarity'),
 
     path('token/', TokenObtainPairView.as_view(), name='token_obtain_pair'),
     path('token/refresh/', TokenRefreshView.as_view(), name='token_refresh'),
