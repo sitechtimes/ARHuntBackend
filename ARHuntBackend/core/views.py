@@ -31,9 +31,6 @@ class RatView(APIView):
 
 from supa import supabase
 
-result = supabase.storage.from_("rat-models").get_public_url("rat.glb")
-
-
 class ListFoldersView(APIView):
     def get(self, request):
         bucket = request.query_params.get("bucket")
