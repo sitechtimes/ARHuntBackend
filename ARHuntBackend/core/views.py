@@ -30,6 +30,7 @@ class RatView(APIView):
         return Response(serializer.errors, status=400)
 
 from supa import supabase
+import json
 
 class ListFoldersView(APIView):
     def get(self, request):
@@ -40,7 +41,7 @@ class ListFoldersView(APIView):
         folders = request.query_params.getlist("folder")
         if not folders:
             return Response({"error": "At least one folder param is required"}, status=400)
-        
+
         response_data = {}
         for folder in folders:
             files = supabase.storage.from_(bucket).list(folder)
@@ -53,5 +54,5 @@ class ListFoldersView(APIView):
                     "url": public_url,
                 })
             response_data[folder] = folder_files
-
         return Response({"files": response_data})
+
