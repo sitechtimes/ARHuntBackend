@@ -30,29 +30,26 @@ class RatView(APIView):
         return Response(serializer.errors, status=400)
 
 from supa import supabase
-import json
 
-class ListFoldersView(APIView):
+class ListAllFilesView(APIView):
     def get(self, request):
-        bucket = request.query_params.get("bucket")
-        if not bucket:
-            return Response({"error": "Missing bucket parameter"}, status=400)
+        bucket = "rat-models"
 
-        folders = request.query_params.getlist("folder")
-        if not folders:
-            return Response({"error": "At least one folder param is required"}, status=400)
+        files = supabase.storage.from_(bucket).list()
+        all_files = []
+        for file in files:
+            file_path = f"{file['name']}"
+            public_url = supabase.storage.from_(bucket).get_public_url(file_path)
+            all_files.append({
+                **file,
+                "url": public_url,
+            })
+        
+        return Response({"files": all_files})
 
-        response_data = {}
-        for folder in folders:
-            files = supabase.storage.from_(bucket).list(folder)
-            folder_files = []
-            for file in files:
-                file_path = f"{folder}/{file['name']}"
-                public_url = supabase.storage.from_(bucket).get_public_url(file_path)
-                folder_files.append({
-                    **file,
-                    "url": public_url,
-                })
-            response_data[folder] = folder_files
-        return Response({"files": response_data})
-
+class ListFileByTypeRarity(APIView):
+    def get(self, request):
+        bucket = "rat-models"
+        file_path = f"{request.data['rat_type']}.glb"
+        public_url = supabase.storage.from_(bucket).get_public_url(file_path)
+        return Response({"url": public_url})
