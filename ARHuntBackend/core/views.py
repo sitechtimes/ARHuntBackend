@@ -32,7 +32,7 @@ class RatView(APIView):
         return Response(RatSerializer(rats, many=True).data)
 
     def post(self, request):
-        serializer = RatSerializer(data=request.data, many=True)
+        serializer = RatSerializer(data=request.data)
         if serializer.is_valid():
             serializer.save()
             return Response(serializer.data, status=201)
@@ -41,12 +41,12 @@ class RatView(APIView):
 
 class CatchRat(APIView):
     def post(self, request):
-        user_id = request.user.id
-
-        rat_id = request.data.get("rat_id")
-        if not rat_id:
+        # user_id = request.user.id
+        user_id = request.data.get("user")
+        qr_number = request.data.get("qr_number")
+        if not qr_number:
             return Response({"No rat id provided"}, status=400)
-        rat = get_object_or_404(Rat, rat_id=rat_id, user=user_id)
+        rat = get_object_or_404(Rat, qr_number=qr_number, user=user_id)
 
         if rat.caught:
             return Response({"This rat has been caught already."}, status=400)

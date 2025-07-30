@@ -18,4 +18,4 @@ class UserSerializer(serializers.ModelSerializer):
 class RatSerializer(serializers.ModelSerializer):
     class Meta:
         model = Rat
-        fields = ["rat_id", "rat_type", "scale", "caught", "score", "user"]
+        fields = ["qr_number", "rat_type", "scale", "caught", "score", "user"]

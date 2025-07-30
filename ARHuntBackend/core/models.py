@@ -25,4 +25,5 @@ class Rat(models.Model):
     caught = models.BooleanField(default=False)
     score = models.IntegerField()
     user = models.ForeignKey(CustomUser, on_delete=models.CASCADE)
-    rat_id = models.IntegerField(default=0, primary_key=True)
+    qr_number = models.IntegerField(default=0, primary_key=True)
+    name = models.CharField(max_length=100)
