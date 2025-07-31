@@ -22,7 +22,7 @@ class UserByName(APIView):
 
 
 class RegisterView(generics.CreateAPIView):
-    users = CustomUser.objects.all()
+    queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.AllowAny]
 
@@ -42,7 +42,6 @@ class RatView(APIView):
 
 class CatchRat(APIView):
     def post(self, request):
-        # user_id = request.user.id
         user_id = request.data.get("user")
         qr_number = request.data.get("qr_number")
         if not qr_number:

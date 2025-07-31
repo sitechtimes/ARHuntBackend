@@ -5,6 +5,8 @@ from .models import *
 
 admin.site.register(CustomUser)
 admin.site.register(Rat)
+
+
 class CustomUserAdmin(UserAdmin):
     model = CustomUser
     list_display = ("email", "name", "grade", "is_staff", "is_active")
