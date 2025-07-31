@@ -17,9 +17,8 @@ class UserView(APIView):
 
 class UserByName(APIView):
     def get(self, request, name):
-        user = User.objects.get(name=name)
-        serializer = UserSerializer(user)
-        return Response(serializer.data)
+        user = get_object_or_404(CustomUser, name=name)
+        return Response(UserSerializer(user).data, status=201)
 
 
 class RegisterView(generics.CreateAPIView):
