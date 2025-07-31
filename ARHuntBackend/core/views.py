@@ -17,12 +17,13 @@ class UserView(APIView):
 
 class UserByName(APIView):
     def get(self, request, name):
-        user = get_object_or_404(CustomUser, name=name)
-        return Response(UserSerializer(user).data, status=201)
+        user = User.objects.get(name=name)
+        serializer = UserSerializer(user)
+        return Response(serializer.data)
 
 
 class RegisterView(generics.CreateAPIView):
-    users = CustomUser.objects.all()
+    queryset = CustomUser.objects.all()
     serializer_class = UserSerializer
     permission_classes = [permissions.AllowAny]
 
@@ -42,7 +43,6 @@ class RatView(APIView):
 
 class CatchRat(APIView):
     def post(self, request):
-        # user_id = request.user.id
         user_id = request.data.get("user")
         qr_number = request.data.get("qr_number")
         if not qr_number:
