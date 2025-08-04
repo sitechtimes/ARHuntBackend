@@ -81,3 +81,11 @@ class ListFileByTypeRarity(APIView):
         file_path = f"{request.data['rat_type']}.glb"
         public_url = supabase.storage.from_(bucket).get_public_url(file_path)
         return Response({"url": public_url})
+
+
+class GetMindFile(APIView):
+    def get(self, request):
+        bucket = "mind-files"
+        file_path = f"{request.data['qr_string']}.mind"
+        public_url = supabase.storage.from_(bucket).get_public_url(file_path)
+        return Response({"url": public_url})
