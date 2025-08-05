@@ -48,12 +48,15 @@ INSTALLED_APPS = [
     "allauth",
     "allauth.account",
     "core",
+    "sslserver",
     "corsheaders",
 ]
 CORS_ALLOW_CREDENTIALS = True
 CORS_ALLOWED_ORIGINS = [
     "http://localhost:3000",
 ]
+SECURE_SSL_REDIRECT = True
+
 MIDDLEWARE = [
     "corsheaders.middleware.CorsMiddleware",
     "django.middleware.security.SecurityMiddleware",
